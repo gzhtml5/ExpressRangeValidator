@@ -64,14 +64,33 @@ let validator = new ERValidator(iExpress, 'CN');
 console.log(`${iExpress}` + ' CN : ', validator.runResult);
 ```
 
-**Wrong express**<br>
-There are several wrong expresses. Because we can't tell the relationship between left part and right part of an express. Such as `10<X, 20.1<X`, the left part is `10<X` and righ part is `20.1<X`, the relationship can be `&&` or `||` , so these are wrong expresses.
+**'or' relation sequence express**
+<br>All the expressions(only support 'x=N') in sequence, such as 'x=10 or x=11 or x=12 or x=12.88 or x=-1.78 ...'
+```javascript
+let iExpress = 'x=10,x=11,x=12,x=12.88,x=-1.78';
+let validator = new ERValidator(iExpress, 12.0);
+console.log(`${iExpress}` + ' 12.0 : ', validator.runResult);
+```
+**'or' relation sequence mix express**
+<br> each unit expression is a mix expression and all in sequence, as following
+<br> exp1: (x>10 and x<20) or (x>30 and x<40) ==> '(x>10,x<20),(x>30,x<40)'
+<br> exp2: (10<x and x<=20) or (30<x and x<40) ==> '(10<x<=20),(30<x<40)'
+<br> exp3: (10<x and x<=20) or (30>x) ==> '(10<x<=20),(30>x)'
+<br> `exp4: (10<x and x<20) or (10<x and x<40) ==> '(10<x<=20),(10<x<40)' // this situlation is true`
+
+```javascript
+let iExpress = '(10<x<=20),(30>x)';
+let validator = new ERValidator(iExpress, 15);
+console.log(`${iExpress}` + ' 15 : ', validator.runResult);
+```
+
+**Wrong express**
+<br>There are several wrong expresses. Because we can't tell the relationship between left part and right part of an express. Such as `10<X, 20.1<X`, the left part is `10<X` and righ part is `20.1<X`, the relationship can be `&&` or `||` , so these are wrong expresses.
 ```javascript
 let eExpress1 = '10<X, 20.1<X';
 let eExpress2 = '10>X, 20.1>X';
 let eExpress3 = 'X>10, X>20.1';
-let eExpress3 = 'X<20.1, X<10';
-                ...
+let eExpress4 = 'X<20.1, X<10';  
 let validator = new ERValidator(eExpress1, 15.5);
 console.log('validator.runResult', validator.runResult); // false
 console.log('validator.runResult', validator.runResultCode); // 2
