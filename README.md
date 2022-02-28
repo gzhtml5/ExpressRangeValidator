@@ -1,9 +1,9 @@
 # expressRangeValidator.js
 A library of digital expression range validator.<br>
 
- This is a javascript library, it allow you to dynamic setting validation expression from your backend, so you don't need to change your front end codes while the value range is changed.
+This is a javascript library, it allow you to dynamic setting validation expression from your backend, so you don't need to change your front end codes while the value range is changed. 
 
-While filling a form with lots of fields which field type is number, and you need to do some range validation for all the fields, such as the field value should be greater than 10, then the expression can be like this `X>10` or `10<X`. Just pass the expression `X>10` and the value into this library and you get a result.
+While filling a form with lots of fields which field type is digital, and you need to do some range validation for all the fields, such as the field value should be greater than 10, then the expression can be like this `X>10` or `10<X`. Normally, you may use `eval()` to figure out your express, but in some environment the eval function was disable, so you  can just pass the expression `X>10` and the value into this library's function and you get a result.
 
 ## How to Use
 The following codes shows how to refer a library and use it for you project.
